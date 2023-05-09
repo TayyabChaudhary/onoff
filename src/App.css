@@ -27,6 +27,16 @@
   margin-left: 20px;
   cursor: pointer;
 }
+.onof__btn{
+  padding: 8px 50px 12px 50px;
+  background-color: rgb(87, 70, 185);
+  color: rgb(204, 204, 204);
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  margin-left: 20px;
+  cursor: pointer;
+}
 
 
 .active{
