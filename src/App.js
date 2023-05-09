@@ -1,61 +1,33 @@
 import './App.css';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 function App() {
-  const [first, setfirst] = React.useState(localStorage.getItem("click"))
-  const [state, setstate] = React.useState(localStorage.getItem("click-second"));
+  const [first, setfirst] = useState()
 
-  const handleOnClick = () => {
-    setfirst("true");
-    setstate("false");
-    localStorage.setItem("click", first)
-    localStorage.setItem("click-second", state)
-
-
-
-  }
-
-
-  const handleSecondClick = () => {
-    setstate("true");
-    setfirst('false');
-    localStorage.setItem("click", first)
-    localStorage.setItem("click-second", state)
-    refresh()
-
-  }
-  const refresh=()=>{
-    window.location.reload();
+  const handleOnClick = (state) => {
+ (state=="off") ? setfirst("false") : setfirst("true");
+ 
+    localStorage.setItem("click", state)
   }
 
   React.useEffect(() => {
-    console.log("dfsdfdsf");
-    // window.location.reload();
-
-    // window.location.reload();
-    
-
-    window.addEventListener("storage", (first) => {
-
+    window.addEventListener("storage", () => {
     window.location.reload();
-      
     });
-    
-   
-  }, [first,state]);
+  }, [first]);
 
-
+  useEffect(()=>{
+    setfirst(localStorage.getItem("click")==="on"?"true":"false")
+  },[])
 
   return (
     <div className="App">
-      {localStorage.getItem("click-second")?
-      <>
-      <button onClick={handleSecondClick}  className={first=="true" ? "active" : "off__btn"}>
+      <button onClick={()=>handleOnClick("off")}  className={first=="true" ? "active" : "off__btn"}>
         OFF
       </button>
-      <button className={state=="true" ? "active" : "on__btn"} onClick={handleOnClick}>
+      <button className={first!="true" ? "active" : "on__btn"} onClick={()=>handleOnClick("on")}>
         ON
-      </button> </>:"ghfhgf"} 
+      </button> 
     </div>
   );
 }
