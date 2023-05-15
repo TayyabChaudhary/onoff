@@ -1,15 +1,16 @@
 import './App.css';
 import React, { useEffect, useState } from 'react';
 import socketIOClient from 'socket.io-client';
-const socket = socketIOClient('http://localhost:3003');
+
+const socket = socketIOClient(process.env.REACT_APP_SERVER_URL);
 
 
 function App() {
-  const [first, setfirst] = useState("true")
+  // const [first, setfirst] = useState("true")
   const [data, setData] = useState()
   const handleOnClick = async (event) => {
     let formData = {}
-    if (event == "button1") {
+    if (event === "button1") {
       formData = {
         button1: "true",
         button2: "false",
@@ -17,7 +18,7 @@ function App() {
       }
 
     }
-    else if (event == "button2") {
+    else if (event === "button2") {
       formData = {
         button1: "false",
         button2: "true",
@@ -34,17 +35,13 @@ function App() {
 
     }
 
-    await fetch('http://localhost:3003/update', {
+    await fetch(`${REACT_APP_SERVER_URL}/update`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formData),
     }).then((response) => {
       if (response.ok) {
         console.log(response, first);
-        // (first === "true") ? setfirst("false") : setfirst("true");
-        // window.addEventListener("storage", () => {
-        //   window.location.reload();
-        //   });
 
       } else {
         console.log('Error updating user');
@@ -54,7 +51,7 @@ function App() {
   }
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch('http://localhost:3003/');
+      const response = await fetch(`${REACT_APP_SERVER_URL}`);
       const jsonData = await response.json();
       setData(jsonData?.rows[0]);
       console.log(data, jsonData.rows);
