@@ -1,7 +1,6 @@
 import './App.css';
 import React, { useEffect, useState } from 'react';
 import socketIOClient from 'socket.io-client';
-
 const socket = socketIOClient('http://localhost:3003');
 
 
@@ -42,7 +41,7 @@ function App() {
     }).then((response) => {
       if (response.ok) {
         console.log(response, first);
-        (first === "true") ? setfirst("false") : setfirst("true");
+        // (first === "true") ? setfirst("false") : setfirst("true");
         // window.addEventListener("storage", () => {
         //   window.location.reload();
         //   });
